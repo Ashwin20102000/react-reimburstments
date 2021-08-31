@@ -7,27 +7,32 @@ export default function App() {
     {
       name: 'Ashwin',
       type: 'Shy',
-      amount: '0'
+      amount: '0',
+      check:false
     },
     {
       name: 'Jones',
       type: 'Happiest',
-      amount: '0'
+      amount: '0',
+      check:false
     },
     {
       name: 'Khabob',
       type: 'HardWork',
-      amount: '0'
+      amount: '0',
+      check:false
     },
     {
       name: 'McGrgor',
       type: 'Notorius',
-      amount: '0'
+      amount: '0',
+      check:false
     },
     {
       name: 'GSP',
       type: 'Dedication',
-      amount: '0'
+      amount: '0',
+      check:false
     }
   ]);
   const [state, setState] = useState('0');
@@ -37,15 +42,15 @@ export default function App() {
     handleSubmit,
     formState: { errors }
   } = useForm();
-  console.log(state);
   const onSubmit = data => {
     console.log(data);
      setDetails(()=>{
-      return (details[state]=data)
+      details[state]=data
+      // details[state].check= details[state].check
+      return details
      })
     setForm(false);
   };
-  console.log(details[state]);
   return (
     <div className="m-5 ">
       {form && (
@@ -120,6 +125,17 @@ export default function App() {
             return (
               <tr>
                 <td>
+                <input
+               class="form-check-input"
+                key={i}
+                type="checkbox"
+                onChange={() => {
+                  details[i].check = !details[i].check;
+                }}
+                name={data.name}
+                value={ data.name }
+              />
+              &nbsp;
                   <button
                     key={i}
                     type="button"
@@ -139,6 +155,11 @@ export default function App() {
           })}
         </tbody>
       </table>
+      <button className="btn btn-primary text-light border border-dark" onClick={()=>{
+        let arr
+        arr=details.filter(data=>{return data.check})
+        console.log(arr)
+      }}>Submit Details</button>
     </div>
   );
 }
